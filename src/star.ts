@@ -1,35 +1,32 @@
 import * as THREE from 'three'
-import saturn from './assets/imgs/saturn.jpg'
 import { getThreeColor } from '@/utils'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+// import prince from './assets/gltfs/prince/scene.gltf?url'
+// 无法build到assets,只能放在public下 https://forum.babylonjs.com/t/vue-bjs-loading-glb/29896/8
+
 export default class Star {
     group = new THREE.Group()
-    // 球体分段, 段数越高球体越光滑
-    segments = 200
-    // 球体(半径, 经纬分段)
-    geom = new THREE.SphereGeometry(20, this.segments, this.segments)
-    // 漫反射贴图
-    mapTexture = new THREE.TextureLoader().load(saturn)
-    // 材质
-    material = new THREE.MeshStandardMaterial({
-        map: this.mapTexture, // 漫反射贴图
-        bumpMap: this.mapTexture, // 凹凸贴图，没有明显的凹凸
-        bumpScale: 0.5, // 凹凸程度
-        metalness: 0.6, // 金属质感
-        roughness: 2, // 粗糙程度
-    })
+    loader = new GLTFLoader()
 
-    // 球体对象
-    mesh = new THREE.Mesh(this.geom, this.material)
-
-    torusGeometry = new THREE.TorusGeometry( 40, .2, 30, 100 )
-    torusMaterial = new THREE.MeshBasicMaterial( { color: getThreeColor() } )
-    torus = new THREE.Mesh( this.torusGeometry, this.torusMaterial )
+    torusGeometry = new THREE.TorusGeometry(40, .2, 30, 100)
+    torusMaterial = new THREE.MeshBasicMaterial({color: getThreeColor()})
+    torus = new THREE.Mesh(this.torusGeometry, this.torusMaterial)
 
     // 添加到组
     constructor() {
-        this.torus.rotation.x = 2.1;
-        this.torus.rotation.y = 0.5;
-        this.group.add(this.mesh)
-        this.group.add(this.torus)
+        // https://sketchfab.com/3d-models/voxel-planet-of-the-little-prince-magicavoxel-8a7cf90ac42c4ef693342404826c06ae
+        // 无法build到assets,只能放在public下 https://forum.babylonjs.com/t/vue-bjs-loading-glb/29896/8
+        this.loader.load('/gltfs/prince/scene.gltf',  (gltf) => {
+            gltf.scene.scale.x = 0.3
+            gltf.scene.scale.y = 0.3
+            gltf.scene.scale.z = 0.3
+            gltf.scene.position.y = -20
+            this.group.add(gltf.scene)
+            this.torus.rotation.x = 2.1
+            this.torus.rotation.y = 0.5
+            this.group.add(this.torus)
+        }, undefined,  (error) => {
+            console.error(error);
+        })
     }
 }
