@@ -3,5 +3,13 @@ html body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-color: black;
+  color: white;
+}
+
+body {
+  --red-shadow: 0 0 80px red,0 0 30px #b22222,0 0 6px #8b0000;
+  --blue-shadow: 0 0 80px #00f,0 0 30px #00008b,0 0 6px #00008b;
+  --green-shadow: 0 0 80px green,0 0 30px #017e01,0 0 6px #006400;
 }
   
