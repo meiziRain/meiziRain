@@ -22,15 +22,18 @@ function onClick() {
     })
     // create an AudioAnalyser, passing in the sound and desired fftSize
     const analyser = new THREE.AudioAnalyser(sound, 32)
+    let index = 0
     function log() {
-        console.log(analyser.data)
-        const sum = analyser.data.reduce((pre, curr) => pre + curr)
+        let sum = analyser.data.reduce((pre, curr) => pre + curr)
         console.log(sum)
         if (sum > 0) {
-            getBloomPass().strength = (sum-200) / 20
+            console.log(sum - index)
+            if ( sum > index) getBloomPass().strength += sum / 1000
+            if ( sum < index) getBloomPass().strength -= sum / 1000
+            if (getBloomPass().strength < 3) getBloomPass().strength = 3
+            index = sum
         } else {
             getBloomPass().strength = 3
-
         }
         analyser.getFrequencyData()
         requestAnimationFrame(log)

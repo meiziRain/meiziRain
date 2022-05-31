@@ -16,7 +16,7 @@ export default class Star {
     constructor() {
         // https://sketchfab.com/3d-models/voxel-planet-of-the-little-prince-magicavoxel-8a7cf90ac42c4ef693342404826c06ae
         // 无法build到assets,只能放在public下 https://forum.babylonjs.com/t/vue-bjs-loading-glb/29896/8
-        this.loader.load('/gltfs/prince/scene.gltf',  (gltf) => {
+        this.loader.load('../public/gltfs/prince/scene.gltf',  (gltf) => {
             gltf.scene.scale.x = 0.3
             gltf.scene.scale.y = 0.3
             gltf.scene.scale.z = 0.3

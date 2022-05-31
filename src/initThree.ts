@@ -17,12 +17,6 @@ let width = window.innerWidth
 let height = window.innerHeight
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000)
-const params = {
-    exposure: 1,
-    bloomStrength: 3,
-    bloomThreshold: 0,
-    bloomRadius: 0
-}
 const loader = new GLTFLoader()
 let distance = 250
 const materials: { [key: string]: any } = {}
@@ -60,7 +54,7 @@ star.torus.layers.enable(BLOOM_SCENE) // 不能使用group.layers
 
 //////////////// Write
 const write = new THREE.Object3D();
-loader.load('/gltfs/write/scene.gltf', function (gltf) {
+loader.load('../public/gltfs/write/scene.gltf', function (gltf) {
     gltf.scene.position.x = 80
     gltf.scene.position.y = 30
     gltf.scene.scale.x = 30
@@ -114,10 +108,7 @@ scene.add(vanilla)
 
 const renderScene = new RenderPass(scene, camera)
 const bloomComposer = new EffectComposer(renderer)
-const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
-bloomPass.threshold = params.bloomThreshold
-bloomPass.strength = params.bloomStrength
-bloomPass.radius = params.bloomRadius
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 4, 0, 0)
 bloomComposer.renderToScreen = false
 bloomComposer.addPass(renderScene)
 bloomComposer.addPass(bloomPass)
