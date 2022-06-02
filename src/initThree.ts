@@ -10,6 +10,7 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass"
 import smileInTheDark from './assets/imgs/smile in the dark.png'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import writeGltf from './assets/glb/write.glb?url'
 import v from './assets/audio/v.wav'
 
 console.log('init')
@@ -53,8 +54,8 @@ scene.add(star.group)
 star.torus.layers.enable(BLOOM_SCENE) // 不能使用group.layers
 
 //////////////// Write
-const write = new THREE.Object3D();
-loader.load('../public/gltfs/write/scene.gltf', function (gltf) {
+const write = new THREE.Object3D()
+loader.load(writeGltf, function (gltf) {
     gltf.scene.position.x = 80
     gltf.scene.position.y = 30
     gltf.scene.scale.x = 30
